@@ -1,32 +1,138 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="layui-container">
+      <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item" :class="{'form-group--error':$v.username.$error}">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-inline">
+            <input
+              type="text"
+              name="title"
+              v-model.trim="$v.username.$model"
+              @input="setName($event.target.value)"
+              placeholder="请输入标题"
+              autocomplete="off"
+              class="layui-input"
+            />
+          </div>
+          <div class="error layui-form-mid" v-if="!$v.username.required">用户名不得为空</div>
+          <div class="error layui-form-mid" v-if="!$v.username.email">用户名格式错误</div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">密码</label>
+          <div class="layui-input-block">
+            <input
+              type="password"
+              name="title"
+              v-model="password"
+              required
+              lay-verify="required"
+              placeholder="请输入标题"
+              autocomplete="off"
+              class="layui-input"
+            />
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">验证码</label>
+          <div class="layui-input-inline">
+            <input
+              type="text"
+              name="title"
+              v-model="code"
+              required
+              lay-verify="required"
+              placeholder="请输入标题"
+              autocomplete="off"
+              class="layui-input"
+            />
+          </div>
+          <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha()"></div>
+        </div>
+        <button type="button" class="layui-btn" @click="checkForm()">立即登录</button>
+        <a href="http://www.layui.com" class="imooc-link">忘记密码</a>
+      </form>
     </div>
-    <router-view/>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import axios from 'axios'
+import { required, email } from 'vuelidate/lib/validators'
+export default {
+  name: 'app',
+  data () {
+    return {
+      svg: '',
+      username: '',
+      password: '',
+      code: '',
+      errorMsg: []
+    }
+  },
+  validations: {
+    username: {
+      required,
+      email
+    },
+    password: {
+      required
+    },
+    code: {
+      required
+    }
+  },
+  mounted () {
+    this.getCaptcha()
+  },
+  methods: {
+    setName (value) {
+      this.username = value
+      this.$v.username.$touch()
+    },
+    getCaptcha () {
+      axios.get('http://localhost:3000/getCaptcha').then(res => {
+        console.log(res)
+        if (res.status === 200) {
+          const obj = res.data
+          if (obj.code === 200) {
+            this.svg = obj.data
+          }
+        }
+      })
+    },
+    checkForm () {
+      this.errorMsg = []
+      if (!this.username) {
+        this.errorMsg.push('用户名不可为空')
+      }
+      if (!this.password) {
+        this.errorMsg.push('密码不可为空')
+      }
+      if (!this.code) {
+        this.errorMsg.push('验证码不可为空')
+      }
     }
   }
+}
+</script>
+<style lang="scss" scoped>
+#app {
+  background: #f2f2f2;
+}
+.layui-container {
+  background: #fff;
+}
+input {
+  width: 190px;
+}
+.imooc-link {
+  margin-left: 10px;
+  &:hover {
+    color: #009688;
+  }
+}
+.svg{
+  position: relative;
+  top: -15px;
 }
 </style>
