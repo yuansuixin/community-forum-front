@@ -1,17 +1,49 @@
-import { Validator } from 'vee-validate'
+import { extend, configure, localize } from 'vee-validate'
+import { required, email, min, length } from 'vee-validate/dist/rules'
+import { i18n } from './i18n'
+// import ZH from 'vee-validate/dist/locale/zh_CN'
 
-const dictionary = {
-  'zh-CN': {
-    message: {
-      required: field => '请输入' + field,
-      email: () => '请输入正确的邮箱格式'
+// 修改默认配置项
+configure({
+  defaultMessage: (field, values) => {
+    values._field_ = i18n.t(`fields.${field}`)
+    return i18n.t(`validation.${values._rule_}`, values)
+  }
+})
+
+// 按需引入规则
+// extend('required', required)
+// extend('email', email)
+// extend('min', min)
+// extend('length', length)
+
+extend('required', {
+  ...required
+})
+extend('email', {
+  ...email
+})
+extend('min', {
+  ...min
+})
+extend('length', {
+  ...length
+})
+
+localize({
+  ZH: {
+    messages: {
+      required: '请输入{_field_}',
+      email: '请输入正确格式的邮箱',
+      min: '请输入至少{length}位数的{_field_}',
+      length: '{_field_}必须为{length}位'
     },
-    attributes: {
-      email: '邮箱',
+    names: {
+      username: '用户名',
       password: '密码',
-      username: '账号'
+      code: '验证码'
     }
   }
-}
+})
 
-Validator.localize(dictionary)
+localize('ZH')
