@@ -2,21 +2,20 @@
   <div id="app">
     <div class="layui-container">
       <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item" :class="{'form-group--error':$v.username.$error}">
+        <div class="layui-form-item">
           <label class="layui-form-label">用户名</label>
           <div class="layui-input-inline">
             <input
               type="text"
-              name="title"
-              v-model.trim="$v.username.$model"
-              @input="setName($event.target.value)"
+              name="username"
+              v-model.trim="username"
+              v-validate="'required|email'"
               placeholder="请输入标题"
               autocomplete="off"
               class="layui-input"
             />
           </div>
-          <div class="error layui-form-mid" v-if="!$v.username.required">用户名不得为空</div>
-          <div class="error layui-form-mid" v-if="!$v.username.email">用户名格式错误</div>
+          <div class="error layui-form-mid">{{errors.first('username')}}</div>
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">密码</label>
@@ -57,7 +56,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { required, email } from 'vuelidate/lib/validators'
+
 export default {
   name: 'app',
   data () {
@@ -69,29 +68,12 @@ export default {
       errorMsg: []
     }
   },
-  validations: {
-    username: {
-      required,
-      email
-    },
-    password: {
-      required
-    },
-    code: {
-      required
-    }
-  },
   mounted () {
     this.getCaptcha()
   },
   methods: {
-    setName (value) {
-      this.username = value
-      this.$v.username.$touch()
-    },
     getCaptcha () {
       axios.get('http://localhost:3000/getCaptcha').then(res => {
-        console.log(res)
         if (res.status === 200) {
           const obj = res.data
           if (obj.code === 200) {
