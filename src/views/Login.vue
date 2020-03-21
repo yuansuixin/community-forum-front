@@ -1,5 +1,6 @@
 <template>
   <div class="layui-container fly-marginTop">
+    <alert></alert>
     <div class="fly-panel fly-panel-user" pad20>
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
@@ -68,6 +69,7 @@
                     >
                     <validation-provider
                       name="验证码"
+                      ref="codefield"
                       rules="required|length:4"
                       v-slot="{ errors }"
                     >
@@ -149,6 +151,7 @@ export default {
     }
   },
   mounted () {
+    window.vue = this
     let sid = ''
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
@@ -182,7 +185,23 @@ export default {
       }).then(res => {
         if (res.code === 200) {
           console.log(res)
+          this.username = ''
+          this.password = ''
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+          })
+        } else if (res.code === 401) {
+          this.$refs.codefield.setErrors([res.msg])
         }
+      }).catch(err => {
+        const data = err.response.data
+        if (data.code === 500) {
+          this.$alert('用户名密码校验失败，请检查')
+        } else {
+          this.$alert('服务器错误')
+        }
+        console.log(err.response)
       })
     }
   }

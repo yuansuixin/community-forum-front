@@ -5,7 +5,7 @@ const getCode = sid => {
   //   method: "get",
   //   url: "/getCaptcha"
   // });
-  return axios.get('/getCaptcha', {
+  return axios.get('/public/getCaptcha', {
     params: {
       sid: sid
     }
@@ -17,7 +17,7 @@ const forget = option => {
 }
 
 const login = loginInfo => {
-  return axios.post('/login', {
+  return axios.post('/login/login', {
     ...loginInfo
   })
 }
