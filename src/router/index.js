@@ -16,7 +16,15 @@ const routes = [
   {
     path: '/reg',
     name: 'reg',
-    component: Reg
+    component: Reg,
+    beforeEnter: (to, from, next) => {
+      // 解决注册页面没有sid的问题，只能从login页面进入注册页面，否则就跳转到login页面
+      if (from.name === 'login') {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/forget',
