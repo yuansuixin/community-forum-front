@@ -1,5 +1,5 @@
 <template>
-  <div class="fly-panel">
+  <div class="fly-panel" v-show="lists.length > 0">
     <div class="fly-panel-title fly-filter">
       <a>置顶</a>
       <a
@@ -10,13 +10,20 @@
         >去签到</a
       >
     </div>
-    <list-item></list-item>
+    <list-item :lists="lists" :isShow="false"></list-item>
   </div>
 </template>
 <script>
 import ListItem from './ListItem'
 export default {
   name: 'top',
+  data() {
+    return {
+      lists: [],
+      page: 0,
+      limit: 20
+    }
+  },
   components: {
     ListItem
   }

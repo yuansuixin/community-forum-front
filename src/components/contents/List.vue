@@ -34,10 +34,11 @@
         >
       </span>
     </div>
-    <list-item></list-item>
+    <list-item :lists="lists" @nextpage="nextPage()"></list-item>
   </div>
 </template>
 <script>
+import { getList } from '@/api/content'
 import ListItem from './ListItem'
 export default {
   name: 'list',
@@ -56,6 +57,24 @@ export default {
     ListItem
   },
   methods: {
+    _getLists() {
+      const options = {
+        catalog: this.catalog,
+        isTop: 0,
+        page: this.page,
+        limit: this.limit,
+        sort: this.sort,
+        tag: this.tag,
+        status: this.status
+      }
+      getList(options).then(res => {
+        console.log('_getLists -> res', res)
+      })
+    },
+    nextPage() {
+      this.page++
+      this._getLists()
+    },
     search(val) {
       switch (val) {
         // 未结帖
