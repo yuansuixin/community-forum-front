@@ -17,7 +17,14 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "assets/layui/css/layui.css";
-@import "assets/css/global.css";
-@import "assets/layui/css/modules/layer/default/layer.css";
+@import 'assets/layui/css/layui.css';
+@import 'assets/css/global.css';
+@import 'assets/layui/css/modules/layer/default/layer.css';
+.svg {
+  position: relative;
+  top: -4px;
+}
+.gray {
+  color: #999;
+}
 </style>
