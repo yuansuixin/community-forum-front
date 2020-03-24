@@ -3,21 +3,33 @@
     <h3 class="fly-panel-title">温馨通道</h3>
     <div class="fly-panel-main layui-row">
       <ul class="layui-clear imooc-quick">
-        <li class="layui-col-xs6">
-          <a href="" target="_blank">imooc</a>
-        </li>
-        <li>
-          <a href="/jie/4281/" target="_blank"
-            >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
-          >
+        <li
+          class="layui-col-xs6"
+          v-for="(item, index) in lists"
+          :key="'tips' + index"
+        >
+          <a :href="item.link" target="_blank">{{ item.title }}</a>
         </li>
       </ul>
     </div>
   </div>
 </template>
 <script>
+import { getTips } from '@/api/content'
 export default {
-  name: 'tips'
+  name: 'tips',
+  data() {
+    return {
+      lists: []
+    }
+  },
+  mounted() {
+    getTips().then(res => {
+      if (res.code === 200) {
+        this.lists = res.data
+      }
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>

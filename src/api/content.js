@@ -18,9 +18,13 @@ const getTop = () => {
   return axios.get('/public/topWeek')
 }
 
+const getAds = () => {
+  return axios.get('/public/ads')
+}
+
 // 友情链接
 const getLinks = () => {
   return axios.get('/public/links')
 }
 
-export { getList, getTips, getLinks, getTop }
+export { getList, getTips, getLinks, getTop, getAds }

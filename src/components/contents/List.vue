@@ -47,6 +47,7 @@ export default {
       isEnd: false,
       status: '',
       isRepeat: false,
+      current: '',
       tag: '',
       sort: '',
       page: 0,
@@ -58,7 +59,34 @@ export default {
   components: {
     ListItem
   },
+  mounted() {
+    const catalog = this.$route.params.catalog
+    if (typeof catalog !== 'undefined' && catalog !== '') {
+      this.catalog = catalog
+    }
+    this._getLists()
+  },
+  watch: {
+    current(newval, oldval) {
+      console.log('current -> oldval', oldval)
+      console.log('current -> newval', newval)
+      this.init()
+    },
+    '$route'(newval, oldval) {
+      const catalog = newval.params.catalog
+      if (typeof catalog !== 'undefined' && catalog !== '') {
+        this.catalog = catalog
+      }
+      this.init()
+    }
+  },
   methods: {
+    init() {
+      this.page = 0
+      this.isEnd = false
+      this.lists = []
+      this._getLists()
+    },
     _getLists() {
       if (this.isRepeat) return
       if (this.isEnd) return
@@ -103,6 +131,8 @@ export default {
       this._getLists()
     },
     search(val) {
+      if (typeof val === 'undefined' && this.current === '') return
+      this.current = val
       switch (val) {
         // 未结帖
         case 0:
@@ -131,6 +161,7 @@ export default {
         default:
           this.status = ''
           this.tag = ''
+          this.current = ''
       }
     }
   }
