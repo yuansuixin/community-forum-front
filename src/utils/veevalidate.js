@@ -49,7 +49,7 @@ localize({
       max: '{_field_}不得超过{length}位',
       length: '{_field_}必须为{length}位',
       is: '两次输入的密码不一致',
-      confirmed: '两次输入密码不一致'
+      confirmed: '请确认密码'
     },
     names: {
       username: '用户名',
