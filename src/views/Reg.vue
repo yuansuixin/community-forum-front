@@ -88,15 +88,15 @@
                     <div class="layui-form-mid layui-word-aux">6到16个字符</div>
                   </div>
                   <div class="layui-form-item">
-                    <label for="L_repass" class="layui-form-label"
-                      >确认密码</label
-                    >
                     <validation-provider
                       name="确认密码"
-                      :rules="`required|is:${password}`"
                       v-slot="{ errors }"
                       vid="confirmation"
                     >
+                      <label for="L_repass" class="layui-form-label"
+                        >确认密码</label
+                      >
+
                       <div class="layui-input-inline">
                         <input
                           type="password"
@@ -188,7 +188,7 @@ export default {
     ValidationProvider,
     ValidationObserver
   },
-  data: function () {
+  data: function() {
     return {
       username: '',
       nickname: '',
@@ -198,11 +198,11 @@ export default {
       svg: ''
     }
   },
-  mounted () {
+  mounted() {
     this._getCode()
   },
   methods: {
-    _getCode () {
+    _getCode() {
       const sid = this.$store.state.sid
       getCode(sid).then(res => {
         if (res.code === 200) {
@@ -210,7 +210,7 @@ export default {
         }
       })
     },
-    async submit () {
+    async submit() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         return
