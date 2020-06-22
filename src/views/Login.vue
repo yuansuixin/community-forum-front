@@ -184,17 +184,22 @@ export default {
       }).then(res => {
         if (res.code === 200) {
           console.log(res)
+          this.$store.commit('setUserInfo', res.data)
+          this.$store.commit('setIsLogin', true)
           this.username = ''
           this.password = ''
           this.code = ''
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
           })
+          this.$router.push({ name: 'index' })
+          // this.$alert('登陆成功')
         } else if (res.code === 401) {
           this.$refs.codefield.setErrors([res.msg])
         }
       }).catch(err => {
         const data = err.response.data
+        console.log(data)
         if (data.code === 500) {
           this.$alert('用户名密码校验失败，请检查')
         } else {
