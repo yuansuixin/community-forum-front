@@ -8,6 +8,12 @@ const Forget = () => import('../views/Forget.vue')
 const Index = () => import('../views/channels/index.vue')
 const Template1 = () => import('../views/channels/Template1.vue')
 const Center = () => import('../views/Center.vue')
+const UserCenter = () => import('../components/user/Center.vue')
+const Settings = () => import('../components/user/Settings.vue')
+const Posts = () => import('../components/user/Posts.vue')
+const Msg = () => import('../components/user/Msg.vue')
+const Others = () => import('../components/user/Others.vue')
+const User = () => import('../views/User')
 
 Vue.use(VueRouter)
 
@@ -51,9 +57,37 @@ const routes = [
     name: 'forget',
     component: Forget
   }, {
+    path: '/user/:uid',
+    name: 'home',
+    component: User
+  },
+  {
     path: '/center',
-    name: 'center',
-    component: Center
+    component: Center,
+    linkActiveClass: 'layui-this',
+    children: [
+      {
+        path: '',
+        name: 'center',
+        component: UserCenter
+      }, {
+        path: 'set',
+        name: 'set',
+        component: Settings
+      }, {
+        path: 'posts',
+        name: 'posts',
+        component: Posts
+      }, {
+        path: 'msg',
+        name: 'msg',
+        component: Msg
+      }, {
+        path: 'others',
+        name: 'others',
+        component: Others
+      }
+    ]
   }
 ]
 
