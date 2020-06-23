@@ -7,6 +7,7 @@ const Reg = () => import('../views/Reg.vue')
 const Forget = () => import('../views/Forget.vue')
 const Index = () => import('../views/channels/index.vue')
 const Template1 = () => import('../views/channels/Template1.vue')
+const Center = () => import('../views/Center.vue')
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,10 @@ const routes = [
     path: '/forget',
     name: 'forget',
     component: Forget
+  }, {
+    path: '/center',
+    name: 'center',
+    component: Center
   }
 ]
 

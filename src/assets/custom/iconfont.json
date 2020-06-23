@@ -1,0 +1,65 @@
+{
+  "id": "1901363",
+  "name": "Mx-BBS",
+  "font_family": "icontoimc",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "495787",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "544495",
+      "name": "document",
+      "font_class": "document",
+      "unicode": "e72f",
+      "unicode_decimal": 59183
+    },
+    {
+      "icon_id": "5560705",
+      "name": "document",
+      "font_class": "document1",
+      "unicode": "e75d",
+      "unicode_decimal": 59229
+    },
+    {
+      "icon_id": "7684914",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e6cc",
+      "unicode_decimal": 59084
+    },
+    {
+      "icon_id": "10166340",
+      "name": "message",
+      "font_class": "message",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "11488136",
+      "name": "category products",
+      "font_class": "Similarproducts",
+      "unicode": "e766",
+      "unicode_decimal": 59238
+    },
+    {
+      "icon_id": "11982645",
+      "name": "Settings, control, options",
+      "font_class": "Settingscontroloptions",
+      "unicode": "e9cb",
+      "unicode_decimal": 59851
+    },
+    {
+      "icon_id": "13253909",
+      "name": "message",
+      "font_class": "message1",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    }
+  ]
+}
