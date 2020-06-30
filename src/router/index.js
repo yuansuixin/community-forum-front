@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
+import Myinfo from '../components/user/common/MyInfo'
 
 const Login = () => import('../views/Login.vue')
 const Reg = () => import('../views/Reg.vue')
@@ -14,6 +15,12 @@ const Posts = () => import('../components/user/Posts.vue')
 const Msg = () => import('../components/user/Msg.vue')
 const Others = () => import('../components/user/Others.vue')
 const User = () => import('../views/User')
+const MyInfo = () => import('../components/user/common/MyInfo')
+const Accounts = () => import('../components/user/common/Accounts')
+const Passwd = () => import('../components/user/common/Passwd')
+const PicUpload = () => import('../components/user/common/PicUpload')
+const MyPost = () => import('../components/user/common/MyPost')
+const MyCollection = () => import('../components/user/common/MyCollection')
 
 Vue.use(VueRouter)
 
@@ -73,11 +80,42 @@ const routes = [
       }, {
         path: 'set',
         name: 'set',
-        component: Settings
+        component: Settings,
+        children: [
+          {
+            path: '',
+            name: 'info',
+            component: MyInfo
+          },
+          {
+            path: 'account',
+            name: 'account',
+            component: Accounts
+          },
+          {
+            path: 'passwd',
+            name: 'passwd',
+            component: Passwd
+          },
+          {
+            path: 'pic',
+            name: 'pic',
+            component: PicUpload
+          }
+        ]
       }, {
         path: 'posts',
         name: 'posts',
-        component: Posts
+        component: Posts,
+        children: [{
+          path: '',
+          name: 'mypost',
+          component: MyPost
+        }, {
+          path: 'mycollection',
+          name: 'mycollection',
+          component: MyCollection
+        }]
       }, {
         path: 'msg',
         name: 'msg',
