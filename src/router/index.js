@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
 import store from '@/store'
+import jwt from 'jsonwebtoken'
+import moment from 'dayjs'
 
 const Login = () => import('../views/Login.vue')
 const Reg = () => import('../views/Reg.vue')
@@ -80,7 +82,6 @@ const routes = [
         component: UserCenter
       }, {
         path: 'set',
-        name: 'set',
         component: Settings,
         children: [
           {
@@ -106,7 +107,6 @@ const routes = [
         ]
       }, {
         path: 'posts',
-        name: 'posts',
         component: Posts,
         children: [{
           path: '',
@@ -138,10 +138,16 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const userInfo = JSON.parse(localStorage.getItem('userInfo'))
   if (token !== '' && token !== null) {
-    store.commit('setToken', token)
-    store.commit('setUserInfo', userInfo)
-    store.commit('setIsLogin', true)
-    next()
+    const payload = jwt.decode(token)
+    console.log(payload)
+    // 查看token是否过期
+    if (moment().isBefore(moment(payload.exp * 1000))) {
+      store.commit('setToken', token)
+      store.commit('setUserInfo', userInfo)
+      store.commit('setIsLogin', true)
+    } else {
+      localStorage.clear()
+    }
   }
   // 路由原信息
   if (to.matched.some(record => record.meta.requiresAuth)) {

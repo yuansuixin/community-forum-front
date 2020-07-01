@@ -18,6 +18,11 @@
 import { getTop } from '@/api/content'
 export default {
   name: 'hotlist',
+  data () {
+    return {
+      lists: []
+    }
+  },
   mounted() {
     getTop().then(res => {
       if (res.code === 200) {
