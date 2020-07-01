@@ -186,6 +186,7 @@ export default {
           console.log(res)
           this.$store.commit('setUserInfo', res.data)
           this.$store.commit('setIsLogin', true)
+          this.$store.commit('setToken', res.token)
           this.username = ''
           this.password = ''
           this.code = ''

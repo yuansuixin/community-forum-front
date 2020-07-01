@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
-import Myinfo from '../components/user/common/MyInfo'
+import store from '@/store'
 
 const Login = () => import('../views/Login.vue')
 const Reg = () => import('../views/Reg.vue')
@@ -71,6 +71,7 @@ const routes = [
   {
     path: '/center',
     component: Center,
+    meta: { requiresAuth: true }, // 元数据
     linkActiveClass: 'layui-this',
     children: [
       {
@@ -128,10 +129,35 @@ const routes = [
     ]
   }
 ]
-
 const router = new VueRouter({
   linkExactActiveClass: 'layui-this',
   routes
+})
+// 全局的路由守卫
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  if (token !== '' && token !== null) {
+    store.commit('setToken', token)
+    store.commit('setUserInfo', userInfo)
+    store.commit('setIsLogin', true)
+    next()
+  }
+  // 路由原信息
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const isLogin = store.state.isLogin
+    // 需要登录的页面进行区别
+    if (isLogin) {
+      // 已经登录
+      // 权限判断，meat元数据
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    // 公共页面，不需要用户登录
+    next()
+  }
 })
 
 export default router

@@ -53,9 +53,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'my-post'
-  }
+export default {
+  name: 'my-post'
+}
 </script>
 
 <style lang="scss" scoped>
