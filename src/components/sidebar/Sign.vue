@@ -94,7 +94,7 @@ export default {
     },
     sign() {
       if (!this.isLogin) {
-        this.$alert('请先登录')
+        this.$pop('shake', '请先登录')
         return
       }
       userSign().then(res => {
@@ -103,9 +103,11 @@ export default {
           this.isSign = true
           user.favs = res.favs
           user.count = res.count
+          user.isSign = true
           this.$store.commit('setUserInfo', user)
+          this.$pop('', '签到成功')
         } else {
-          this.$alert('用户已经签到')
+          this.$pop('', '您已经签到')
         }
       })
     }
