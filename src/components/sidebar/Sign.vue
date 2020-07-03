@@ -31,6 +31,7 @@
 import SignInfo from './SignInfo'
 import SignList from './SignList'
 import { userSign } from '../../api/user'
+import moment from 'dayjs'
 export default {
   name: 'sign',
   components: {
@@ -42,8 +43,22 @@ export default {
       isLogin: this.$store.state.isLogin,
       isShow: false,
       showList: false,
-      isSign: this.$store.state.userInfo.isSign ? this.$store.state.userInfo.isSign : false,
+      isSign: false,
       current: 0
+    }
+  },
+  mounted() {
+    // 判断用户的上一次签到时间与亲到状态
+    // 如果用户上一次签到时间与当天的签到日期相差1天，允许用户签到
+    const isSign = this.$store.state.userInfo.isSign
+    const lastSign = this.$store.state.userInfo.lastSign // 上一次签到的创建时间
+    const nowDate = moment().format('YYYY-MM-DD')
+    const lastDate = moment(lastSign).format('YYYY-MM-DD')
+    const diff = moment(nowDate).diff(moment(lastDate), 'day')
+    if (diff > 0 && isSign) {
+      this.isSign = false
+    } else {
+      this.isSign = isSign
     }
   },
   computed: {
@@ -100,15 +115,16 @@ export default {
       userSign().then(res => {
         const user = this.$store.state.userInfo
         if (res.code === 200) {
-          this.isSign = true
           user.favs = res.favs
           user.count = res.count
-          user.isSign = true
-          this.$store.commit('setUserInfo', user)
           this.$pop('', '签到成功')
         } else {
           this.$pop('', '您已经签到')
         }
+        this.isSign = true
+        user.isSign = true
+        user.lastSign = res.lastSign
+        this.$store.commit('setUserInfo', user)
       })
     }
   }
