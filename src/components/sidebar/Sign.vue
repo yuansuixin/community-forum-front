@@ -8,19 +8,20 @@
       <a href="javascript:;" class="fly-link" id="LAY_signinTop" @click="showTop()"
         >活跃榜<span class="layui-badge-dot"></span
       ></a>
-      <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
+      <span class="fly-signin-days">已连续签到<cite>{{count}}</cite>天</span>
     </div>
     <div class="fly-panel-main fly-signin-main">
-      <button class="layui-btn layui-btn-danger" id="LAY_signin">
-        今日签到
-      </button>
-      <span>可获得<cite>5</cite>飞吻</span>
-
+      <template v-if="!isSign">
+        <button class="layui-btn layui-btn-danger" id="LAY_signin" @click="sign()">
+          今日签到
+        </button>
+        <span>可获得<cite>{{favs}}</cite>飞吻</span>
+      </template>
       <!-- 已签到状态 -->
-      <!--
-          <button class="layui-btn layui-btn-disabled">今日已签到</button>
-          <span>获得了<cite>20</cite>飞吻</span>
-          -->
+      <template v-else>
+        <button class="layui-btn layui-btn-disabled">今日已签到</button>
+        <span>获得了<cite>{{favs}}</cite>飞吻</span>
+      </template>
     </div>
     <sign-info :isShow="isShow" @closeModal="close()"></sign-info>
     <sign-list :isShow="showList" @closeModal="close()"></sign-list>
@@ -29,6 +30,7 @@
 <script>
 import SignInfo from './SignInfo'
 import SignList from './SignList'
+import { userSign } from '../../api/user'
 export default {
   name: 'sign',
   components: {
@@ -37,8 +39,43 @@ export default {
   },
   data() {
     return {
+      isLogin: this.$store.state.isLogin,
       isShow: false,
-      showList: false
+      showList: false,
+      isSign: this.$store.state.userInfo.isSign ? this.$store.state.userInfo.isSign : false,
+      current: 0
+    }
+  },
+  computed: {
+    favs() {
+      const count = parseInt(this.count)
+      let result = 0
+      if (count < 5) {
+        result = 5
+      } else if (count >= 5 && count < 15) {
+        result = 10
+      } else if (count >= 15 && count < 30) {
+        result = 15
+      } else if (count >= 30 && count < 100) {
+        result = 20
+      } else if (count >= 100 && count < 365) {
+        result = 30
+      } else if (count >= 365) {
+        result = 50
+      }
+      return result
+    },
+    count() {
+      var userinfo = this.$store.state.userInfo
+      if (userinfo !== {}) {
+        if (typeof userinfo.count !== 'undefined') {
+          return userinfo.count
+        } else {
+          return 0
+        }
+      } else {
+        return 0
+      }
     }
   },
   methods: {
@@ -51,6 +88,26 @@ export default {
     close() {
       this.isShow = false
       this.showList = false
+    },
+    choose(val) {
+      this.current = val
+    },
+    sign() {
+      if (!this.isLogin) {
+        this.$alert('请先登录')
+        return
+      }
+      userSign().then(res => {
+        const user = this.$store.state.userInfo
+        if (res.code === 200) {
+          this.isSign = true
+          user.favs = res.favs
+          user.count = res.count
+          this.$store.commit('setUserInfo', user)
+        } else {
+          this.$alert('用户已经签到')
+        }
+      })
     }
   }
 }
