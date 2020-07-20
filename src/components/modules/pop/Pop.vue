@@ -1,6 +1,6 @@
 <template>
-  <div class="tips animation" :class="{'shake':type==='shake'}" v-show="isShow" ref="tips">
 <!--    pop气泡组件-->
+  <div class="tips animation" :class="{'shake':type==='shake'}" v-show="isShow" ref="tips">
     <div class="content">{{msg}}</div>
   </div>
 </template>
