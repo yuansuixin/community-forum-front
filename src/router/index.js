@@ -25,6 +25,7 @@ const MyPost = () => import('../components/user/common/MyPost')
 const MyCollection = () => import('../components/user/common/MyCollection')
 const Confirm = () => import('../views/Confirm')
 const Reset = () => import('../views/Reset')
+const NoFound = () => import('../views/NotFound')
 
 Vue.use(VueRouter)
 
@@ -139,6 +140,14 @@ const routes = [
         component: Others
       }
     ]
+  },
+  {
+    path: '/404',
+    component: NoFound
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 const router = new VueRouter({

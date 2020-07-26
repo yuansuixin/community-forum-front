@@ -94,7 +94,7 @@ export default {
         this.$store.commit('setUserInfo', '')
         this.$store.commit('setIsLogin', false)
         // 将页面推送到主页
-        this.$router.push('/')
+        this.$router.push({ name: 'index' }, () => {})
       }, () => {})
     }
   },
