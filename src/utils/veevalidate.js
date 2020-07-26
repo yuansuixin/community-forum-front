@@ -55,6 +55,7 @@ localize({
       username: '用户名',
       password: '密码',
       repasswd: '确认密码',
+      oldpasswd: '旧密码',
       code: '验证码'
     }
   }

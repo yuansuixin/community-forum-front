@@ -23,6 +23,8 @@ const Passwd = () => import('../components/user/common/Passwd')
 const PicUpload = () => import('../components/user/common/PicUpload')
 const MyPost = () => import('../components/user/common/MyPost')
 const MyCollection = () => import('../components/user/common/MyCollection')
+const Confirm = () => import('../views/Confirm')
+const Reset = () => import('../views/Reset')
 
 Vue.use(VueRouter)
 
@@ -47,6 +49,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/confirm',
+    name: 'confirm',
+    component: Confirm
+  },
+  {
+    path: '/reset',
+    name: 'reset',
+    component: Reset
   },
   {
     path: '/reg',
