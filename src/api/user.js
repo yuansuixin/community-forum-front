@@ -1,15 +1,22 @@
 import axios from '../utils/request'
-import store from '@/store'
+import qs from 'qs'
 
 // 用户签到
 const userSign = () => {
-  const headers = {
-    Authorization: 'Bearer ' + store.state.token,
-    'Content-Type': 'application/json'
-  }
-  return axios.get('/user/fav', { headers })
+  return axios.get('/user/fav')
 }
 
+// 更新用户基本资料
+const updateUserInfo = data => axios.post('/user/basic', data)
+
+// 确认修改用户名
+const updateUsername = data => axios.get('/public/reset-email?' + qs.stringify((data)))
+
+// 修改用户密码
+const changePasswd = data => axios.post('/user/change-password', {
+  ...data
+})
+
 export {
-  userSign
+  userSign, updateUserInfo, updateUsername, changePasswd
 }

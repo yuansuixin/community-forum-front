@@ -27,4 +27,7 @@ const getLinks = () => {
   return axios.get('/public/links')
 }
 
-export { getList, getTips, getLinks, getTop, getAds }
+// 图片上传
+const uploadImg = formData => axios.post('/content/upload')
+
+export { getList, getTips, getLinks, getTop, getAds, uploadImg }
