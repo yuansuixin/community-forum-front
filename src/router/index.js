@@ -4,6 +4,7 @@ import Home from '@/views/Home'
 import store from '@/store'
 import jwt from 'jsonwebtoken'
 import moment from 'dayjs'
+import Add from '../components/contents/Add'
 
 const Login = () => import('../views/Login.vue')
 const Reg = () => import('../views/Reg.vue')
@@ -24,6 +25,7 @@ const PicUpload = () => import('../components/user/common/PicUpload')
 const MyPost = () => import('../components/user/common/MyPost')
 const MyCollection = () => import('../components/user/common/MyCollection')
 const NoFound = () => import('../views/NotFound')
+const Add = () => import('../components/contents/Add')
 
 Vue.use(VueRouter)
 
@@ -66,6 +68,10 @@ const routes = [
     path: '/forget',
     name: 'forget',
     component: Forget
+  },{
+    path: '/add',
+    name:'add',
+    component: Add
   }, {
     path: '/user/:uid',
     name: 'home',
