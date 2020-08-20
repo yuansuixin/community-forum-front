@@ -36,7 +36,7 @@ class HttpRequest {
     // Add a request interceptor
     instance.interceptors.request.use(
       config => {
-        const isPublic = false
+        let isPublic = false
         publicConfig.publicPath.map(path => {
           isPublic = isPublic || path.test(config.url)
         })

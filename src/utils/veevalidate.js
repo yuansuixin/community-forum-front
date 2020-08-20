@@ -1,5 +1,5 @@
 import { extend, localize } from 'vee-validate'
-import { required, email, min, length, max, is, confirmed } from 'vee-validate/dist/rules'
+import { required, email, min, length, max, is, confirmed, is_not } from 'vee-validate/dist/rules'
 // import { i18n } from './i18n'
 // import ZH from 'vee-validate/dist/locale/zh_CN'
 
@@ -40,6 +40,10 @@ extend('is', {
   ...is
 })
 
+extend('is_not', {
+  ...is_not
+})
+
 localize({
   ZH: {
     messages: {
@@ -49,14 +53,19 @@ localize({
       max: '{_field_}不得超过{length}位',
       length: '{_field_}必须为{length}位',
       is: '两次输入的密码不一致',
-      confirmed: '请确认密码'
+      confirmed: '请确认密码',
+      catalog: {
+        is_not: '请选择{_field_}'
+      }
     },
     names: {
       username: '用户名',
       password: '密码',
       repasswd: '确认密码',
       oldpasswd: '旧密码',
-      code: '验证码'
+      code: '验证码',
+      title: '标题',
+      catalog: '分类'
     }
   }
 })

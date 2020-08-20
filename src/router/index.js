@@ -4,7 +4,6 @@ import Home from '@/views/Home'
 import store from '@/store'
 import jwt from 'jsonwebtoken'
 import moment from 'dayjs'
-import Add from '../components/contents/Add'
 
 const Login = () => import('../views/Login.vue')
 const Reg = () => import('../views/Reg.vue')
@@ -80,9 +79,9 @@ const routes = [
     path: '/forget',
     name: 'forget',
     component: Forget
-  },{
+  }, {
     path: '/add',
-    name:'add',
+    name: 'add',
     component: Add
   }, {
     path: '/user/:uid',

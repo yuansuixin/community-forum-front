@@ -30,4 +30,7 @@ const getLinks = () => {
 // 图片上传
 const uploadImg = formData => axios.post('/content/upload')
 
+// 发贴接口
+const addPost = (data) => axios.post('/content/add', { ...data })
+
 export { getList, getTips, getLinks, getTop, getAds, uploadImg }
