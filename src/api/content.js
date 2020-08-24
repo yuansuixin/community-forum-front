@@ -33,4 +33,4 @@ const uploadImg = formData => axios.post('/content/upload')
 // 发贴接口
 const addPost = (data) => axios.post('/content/add', { ...data })
 
-export { getList, getTips, getLinks, getTop, getAds, uploadImg }
+export { getList, getTips, getLinks, getTop, getAds, uploadImg, addPost }
