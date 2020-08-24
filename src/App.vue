@@ -62,6 +62,21 @@ export default {
     margin-left: $i * 10 + px !important;
   }
 }
+.d-flex {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  &.flex-start {
+    justify-content: flex-start;
+  }
+  &.flex-end {
+    justify-content: flex-end;
+  }
+  &.flex-center {
+    justify-content: center;
+  }
+}
+
 .text-left{
   text-align: left;
 }

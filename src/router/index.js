@@ -27,6 +27,7 @@ const Confirm = () => import('../views/Confirm')
 const Reset = () => import('../views/Reset')
 const NoFound = () => import('../views/NotFound')
 const Add = () => import('../components/contents/Add')
+const Detail = () => import('../components/contents/Detail')
 
 Vue.use(VueRouter)
 
@@ -82,8 +83,14 @@ const routes = [
   }, {
     path: '/add',
     name: 'add',
-    component: Add
+    component: Add,
+    meta: { requiresAuth: true }
   }, {
+    path: '/detail',
+    name: 'detail',
+    component: Detail
+  },
+  {
     path: '/user/:uid',
     name: 'home',
     component: User
