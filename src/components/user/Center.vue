@@ -1,60 +1,72 @@
 <template>
-  <div class='panel main pd20'>
-    <div class="msg">hi，admin。你已经是我们的正式会员</div>
+  <div class="panel main pd2">
+    <div class="msg">Hi, Admin，你已经是我们的正式会员！</div>
     <div class="layui-row layui-col-space20">
       <div class="layui-col-md6">
         <div class="panel border">
           <div class="title">我的会员信息</div>
-          <div class="content">
-            <p>积分经验值：60</p>
-            <p>您当前为：非VIP</p>
+          <div class="content fly-signin">
+            <p>
+              积分经验值：
+              <cite>{{userInfo.favs}}</cite>
+            </p>
+            <p>
+              您当前为:
+              <cite>{{userInfo.isVip === '0'? '非VIP' : 'VIP' + userInfo.isVip }}</cite>
+            </p>
           </div>
         </div>
       </div>
       <div class="layui-col-md6">
-        <Sign class='border'></Sign>
+        <sign class="border"></sign>
       </div>
       <div class="layui-col-md12 mt20">
         <div class="panel border">
-          <div class="title">
-            快捷方式
-          </div>
-          <div class="content">
+          <div class="title">快捷方式</div>
+          <div class="content" style="height: auto;">
             <ul class="layui-row layui-col-space10">
-              <li class="layui-col-sm3 layui-col-xs4">
-                <a href="">
-                  <div class="layui-icon layui-icon-set shortcut"></div>
-                  <span>修改密码</span>
-                </a>
+              <li
+                class="layui-col-sm3 layui-col-xs4"
+                v-for="(item,index) in lists"
+                :key="'user-center' + index"
+              >
+                <router-link :to="{name: item.route}">
+                  <div class="layui-icon shortcut" :class="item.icon"></div>
+                  <span>{{item.name}}</span>
+                </router-link>
               </li>
-              <li class="layui-col-sm3 layui-col-xs4"> <a href="">
-                <div class="layui-icon layui-icon-set shortcut"></div>
-                <span>修改密码</span>
-              </a></li>
-              <li class="layui-col-sm3 layui-col-xs4"> <a href="">
-                <div class="layui-icon layui-icon-set shortcut"></div>
-                <span>修改密码</span>
-              </a></li>
-              <li class="layui-col-sm3 layui-col-xs4"> <a href="">
-                <div class="layui-icon layui-icon-set shortcut"></div>
-                <span>修改密码</span>
-              </a></li>
             </ul>
           </div>
-
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getInfo } from '../../api/user'
 import Sign from '@/components/sidebar/Sign.vue'
 export default {
   name: 'user-center',
   components: {
     Sign
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo
+    }
+  },
+  mounted() {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() {
+      getInfo({ uid: this.userInfo._id }).then(res => {
+        if (res.code === 200) {
+          this.$store.commit('setUserInfo', res.data)
+        }
+      })
+    }
   }
 }
 </script>

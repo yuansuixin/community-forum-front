@@ -3,7 +3,7 @@
  @Name: 用户模块
 
  */
- 
+
 layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
 
   var $ = layui.jquery;
@@ -66,8 +66,8 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
 
     var page = function(now){
       var curr = now || 1;
-      if(gather.minelog[type + '-page-' + curr]){
-        view(gather.minelog[type + '-page-' + curr]);
+      if(gather.minelog[type + '-pagination-' + curr]){
+        view(gather.minelog[type + '-pagination-' + curr]);
       } else {
         //我收藏的帖
         if(type === 'collection'){
@@ -90,12 +90,12 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
               }
 
               res.rows = data;
-              
+
               view(res);
             };
 
             render(curr)
-            gather.minelog['collect-page-' + curr] = res;
+            gather.minelog['collect-pagination-' + curr] = res;
 
             now || laypage.render({
               elem: 'LAY_page1'
@@ -113,7 +113,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
             page: curr
           }, function(res){
             view(res);
-            gather.minelog['mine-jie-page-' + curr] = res;
+            gather.minelog['mine-jie-pagination-' + curr] = res;
             now || laypage.render({
               elem: 'LAY_page'
               ,count: res.count
@@ -315,8 +315,8 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
         dom.minemsg.html('<div class="fly-none">您暂时没有最新消息</div>');
       }
     }
-    
-    
+
+
     /*
     fly.json('/message/find/', {}, function(res){
       var html = laytpl(tpl).render(res);
@@ -326,7 +326,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
       }
     });
     */
-    
+
     //阅读后删除
     dom.minemsg.on('click', '.mine-msg li .fly-delete', function(){
       var othis = $(this).parents('li'), id = othis.data('id');
@@ -361,5 +361,5 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
   dom.minemsg[0] && gather.minemsg();
 
   exports('user', null);
-  
+
 });
